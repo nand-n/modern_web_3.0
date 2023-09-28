@@ -5,4 +5,4 @@ COPY package*.json ./
 RUN yarn
 COPY . .
 EXPOSE 3000
-CMD yarn build and yarn start
+CMD yarn build && yarn start
