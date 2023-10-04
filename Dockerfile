@@ -1,8 +1,11 @@
-FROM node:18
-
+FROM node as builder
 WORKDIR /app
 COPY package*.json ./
-RUN yarn
+RUN yarn 
 COPY . .
-EXPOSE 3000
-CMD yarn build && yarn start
+RUN yarn build
+
+FROM nginx
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/out /usr/share/nginx/html
+EXPOSE 8000
